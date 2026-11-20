@@ -1,0 +1,28 @@
+Koncept
+Napínavý arkádový aim trainer postavený na principu risk vs. odměna (push-your-luck), navržený přímo pro živé herní stánky na akcích. 
+Hráči závodí s 60sekundovým odpočtem a snaží se nasbírat co nejvyšší neuložený násobič skóre trefováním stále obtížnějších cílů. Musí se přitom sami rozhodnout, kdy své body bezpečně uloží, než jediná chyba smaže celou jejich sérii.
+
+Základní herní mechaniky
+60sekundový odpočet: Každé kolo je striktní 60sekundový sprint bez pauzy.
+
+Rostoucí násobič (1x → 25x+): Každý zasažený cíl přidá základní body do Neuloženého banku (Unbanked Pot) a zvýší násobič o +1x. S vyšším násobičem se cíle dynamicky zmenšují, zkracuje se doba jejich životnosti a zrychluje se jejich pohyb.
+
+Mechanika ukládání bodů (Riziko vs. Odměna): Ve spodní střední části arény se nachází zářící Bankovní jádro (Bank Core). Výstřel do něj spustí 0,8sekundové nabíjení, které převede Neuložený bank do trvalého skóre, vynuluje násobič zpět na 1x a obnoví původní velikost cílů.
+
+Penalizace za chybu (Bust): Minutí výstřelu nebo vypršení času cíle vynuluje Neuložený bank na 0, resetuje násobič a na 1,2 sekundy zablokuje zbraň (System Reboot).
+
+Typy cílů
+Relay Node (Azurová koule): Standardní cíl. Uděluje základní skóre a zvyšuje násobič o +1x.
+
+Overvolt Prism (Zlatý krystal): Objevuje se krátce při sérii 5x a vyšší. Okamžitě přidá +3x k násobiči a +2 sekundy k celkovému času, ale má poloviční dobu životnosti.
+
+Static Mine (Červený osmiúhelník): Spawnuje se těsně vedle skutečných cílů při sérii 8x a vyšší. Jejím zasažením dojde k okamžitému vynulování série (Bust).
+
+Technická architektura
+IDE a Engine: C# vyvíjený v JetBrains Rider s enginem Unity.
+
+Stavový automat (State Machine): Countdown → Active → Banking → RebootStun → Summary.
+
+Dynamické škálování: Velikost, rychlost a životnost cílů jsou řízeny pomocí Unity AnimationCurve assetů napojených na currentMultiplier.
+
+Ukládání dat: Lokální JSON žebříček podporující 3znakové arkádové přezdívky a okamžitý restart hry.
